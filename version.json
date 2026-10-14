@@ -1,11 +1,19 @@
 {
-  "version": "1.7.0",
+  "version": "1.7",
+  "date": "2026-10-14",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Деревня под вулканом: извержение, лава и раскалённые камни",
-    "Новые карты: Пригород, Мегаполис, Промзона — каждый раз новая застройка",
-    "Холмы и овраги, дома на склонах",
-    "Живые звуки: крики, сверчки, машины у моста",
-    "Кнопка «Выйти» и прокрутка списков в «Стройке»"
+    "Город ожил: жители, пожарные, скорая и полиция",
+    "Карта «Порт» и настоящая вода: шланг, тонущий корабль, цунами",
+    "Больше обломков: этажи ломаются в падении, бомба рвётся внутри",
+    "Вес земли: подкопанный дом проваливается вместе с грунтом",
+    "Деревня под вулканом, новые карты, ядерная тревога"
+  ],
+  "notes_en": [
+    "The city comes alive: residents, firefighters, ambulance and police",
+    "Port map and real water: hose, sinking ship, tsunami",
+    "More debris: floors break apart as they fall, bombs explode inside",
+    "Ground has weight: undermined houses sink with the soil",
+    "Volcano village, new maps, nuclear air-raid siren"
   ]
 }
