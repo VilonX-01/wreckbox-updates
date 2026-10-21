@@ -1,19 +1,19 @@
 {
-  "version": "1.7",
-  "date": "2026-10-14",
+  "version": "1.8",
+  "date": "2026-10-21",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Город ожил: жители, пожарные, скорая и полиция",
-    "Карта «Порт» и настоящая вода: шланг, тонущий корабль, цунами",
-    "Больше обломков: этажи ломаются в падении, бомба рвётся внутри",
-    "Вес земли: подкопанный дом проваливается вместе с грунтом",
-    "Деревня под вулканом, новые карты, ядерная тревога"
+    "Карта «Военная база»: бункер, склад боеприпасов, ПВО, учения",
+    "Бункеры и укрытия по-настоящему спасают от ядерного удара",
+    "Карта «Атомград»: АЭС, авария и выброс радиации",
+    "Электросеть на всех картах и инструмент «Здание»",
+    "Семь новых материалов, у каждого свой звук"
   ],
   "notes_en": [
-    "The city comes alive: residents, firefighters, ambulance and police",
-    "Port map and real water: hose, sinking ship, tsunami",
-    "More debris: floors break apart as they fall, bombs explode inside",
-    "Ground has weight: undermined houses sink with the soil",
-    "Volcano village, new maps, nuclear air-raid siren"
+    "Military Base map: bunker, ammo depot, air defence, drills",
+    "Bunkers and shelters truly protect from nuclear blasts",
+    "Atomgrad map: nuclear plant, accident and fallout",
+    "Power grid on every map and the Building tool",
+    "Seven new materials, each with its own sound"
   ]
 }
