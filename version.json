@@ -1,17 +1,23 @@
 {
-  "version": "1.9.1",
-  "date": "2026-10-26",
+  "version": "1.9.2",
+  "date": "2026-10-27",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Солдаты больше не стоят рядом с зомби: бьют прикладом и стреляют в упор",
-    "Зомби не пугаются землетрясения",
-    "На доске почёта — новые имена подписчиков",
-    "Всё из 1.9: зомби, лебёдка, сохранения, погода"
+    "Отмена в стройке: Ctrl+Z — отменить, Ctrl+Y — вернуть, или стрелки в верхней панели",
+    "Подземные бункеры больше не рушатся сами",
+    "После загрузки сохранения постройки не висят в воздухе: нагрузка считается сразу",
+    "Android: миром можно поделиться файлом и открыть его из файла",
+    "Зомби больше не ходят под зонтами",
+    "Дозиметр не трещит быстрее при ускорении времени",
+    "Ластик с кистью «1» стирает ровно одну ячейку"
   ],
   "notes_en": [
-    "Soldiers no longer stand still next to zombies: rifle-butt strikes and point-blank shots",
-    "Zombies are no longer scared by earthquakes",
-    "New supporter names on the honour board",
-    "Everything from 1.9: zombies, the winch, saves, weather"
+    "Undo in build mode: Ctrl+Z to undo, Ctrl+Y to redo, or the arrows in the top bar",
+    "Underground bunkers no longer collapse on their own",
+    "After loading a save, buildings no longer hang in the air: loads are recalculated right away",
+    "Android: share your world as a file and open it from a file",
+    "Zombies no longer walk around with umbrellas",
+    "The Geiger counter no longer clicks faster when time is sped up",
+    "The eraser at size 1 removes exactly one cell"
   ]
 }
