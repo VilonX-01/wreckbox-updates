@@ -1,19 +1,19 @@
 {
-  "version": "1.8",
-  "date": "2026-10-21",
+  "version": "1.9",
+  "date": "2026-10-26",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Карта «Военная база»: бункер, склад боеприпасов, ПВО, учения",
-    "Бункеры и укрытия по-настоящему спасают от ядерного удара",
-    "Карта «Атомград»: АЭС, авария и выброс радиации",
-    "Электросеть на всех картах и инструмент «Здание»",
-    "Семь новых материалов, у каждого свой звук"
+    "Зомби: заражение, толпа, полиция и армия отстреливаются",
+    "Инструмент «Лебёдка»: тяни тросом, вырывай стены, вали дома",
+    "Высотки рушатся по-разному, мебель падает вместе с этажом",
+    "Сохранение мира, ускорение времени, погода и времена года",
+    "Жители умнее: обходят опасность и прячутся от радиации"
   ],
   "notes_en": [
-    "Military Base map: bunker, ammo depot, air defence, drills",
-    "Bunkers and shelters truly protect from nuclear blasts",
-    "Atomgrad map: nuclear plant, accident and fallout",
-    "Power grid on every map and the Building tool",
-    "Seven new materials, each with its own sound"
+    "Zombies: infection, hordes — the police and army fight back",
+    "The Winch tool: pull with a cable, rip out walls, bring buildings down",
+    "Towers collapse in different ways, furniture falls with its floor",
+    "Save your world, speed up time, weather and seasons",
+    "Smarter residents: they avoid danger and shelter from radiation"
   ]
 }
