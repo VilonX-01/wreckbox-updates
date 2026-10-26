@@ -1,19 +1,17 @@
 {
-  "version": "1.9",
+  "version": "1.9.1",
   "date": "2026-10-26",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Зомби: заражение, толпа, полиция и армия отстреливаются",
-    "Инструмент «Лебёдка»: тяни тросом, вырывай стены, вали дома",
-    "Высотки рушатся по-разному, мебель падает вместе с этажом",
-    "Сохранение мира, ускорение времени, погода и времена года",
-    "Жители умнее: обходят опасность и прячутся от радиации"
+    "Солдаты больше не стоят рядом с зомби: бьют прикладом и стреляют в упор",
+    "Зомби не пугаются землетрясения",
+    "На доске почёта — новые имена подписчиков",
+    "Всё из 1.9: зомби, лебёдка, сохранения, погода"
   ],
   "notes_en": [
-    "Zombies: infection, hordes — the police and army fight back",
-    "The Winch tool: pull with a cable, rip out walls, bring buildings down",
-    "Towers collapse in different ways, furniture falls with its floor",
-    "Save your world, speed up time, weather and seasons",
-    "Smarter residents: they avoid danger and shelter from radiation"
+    "Soldiers no longer stand still next to zombies: rifle-butt strikes and point-blank shots",
+    "Zombies are no longer scared by earthquakes",
+    "New supporter names on the honour board",
+    "Everything from 1.9: zombies, the winch, saves, weather"
   ]
 }
