@@ -1,23 +1,19 @@
 {
-  "version": "1.9.2",
+  "version": "1.9.3",
   "date": "2026-10-27",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Отмена в стройке: Ctrl+Z — отменить, Ctrl+Y — вернуть, или стрелки в верхней панели",
-    "Подземные бункеры больше не рушатся сами",
-    "После загрузки сохранения постройки не висят в воздухе: нагрузка считается сразу",
-    "Android: миром можно поделиться файлом и открыть его из файла",
-    "Зомби больше не ходят под зонтами",
-    "Дозиметр не трещит быстрее при ускорении времени",
-    "Ластик с кистью «1» стирает ровно одну ячейку"
+    "На телефоне звук больше не трещит, не заикается и не пропадает",
+    "Windows: сохранения и настройки больше не пропадают после перезапуска игры",
+    "Обвалы и метеориты не хрипят в динамике телефона",
+    "Если звук всё же пропал — коснитесь экрана, он вернётся",
+    "Команда консоли «звук» показывает, как работает звук"
   ],
   "notes_en": [
-    "Undo in build mode: Ctrl+Z to undo, Ctrl+Y to redo, or the arrows in the top bar",
-    "Underground bunkers no longer collapse on their own",
-    "After loading a save, buildings no longer hang in the air: loads are recalculated right away",
-    "Android: share your world as a file and open it from a file",
-    "Zombies no longer walk around with umbrellas",
-    "The Geiger counter no longer clicks faster when time is sped up",
-    "The eraser at size 1 removes exactly one cell"
+    "On phones, sound no longer crackles, stutters or disappears",
+    "Windows: saves and settings no longer disappear after restarting the game",
+    "Collapses and meteors no longer distort on phone speakers",
+    "If the sound ever drops out, tap the screen and it comes back",
+    "The console command \"sound\" shows how the sound is doing"
   ]
 }
