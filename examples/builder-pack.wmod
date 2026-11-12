@@ -1,0 +1,118 @@
+// Набор строителя — мод-пример для Wreckbox: свои предметы, материалы и звук.
+// Как поставить: меню → «Моды» → «Добавить файл» (или «Вставить текст» и вставить всё это целиком).
+// Что делает:
+//   • «Стройка» → «Кисть»: материалы «Титан» и «Желе»;
+//   • «Стройка» → «Предметы» → вкладка «Моды»: неоновая вывеска, бочка с краской, ящик фейерверков (нарисованы кодом)
+//     и игровой автомат (вшитая картинка);
+//   • «Снос»: инструмент «Дождь из ящиков» со своим звуком.
+Wreck.mod({
+  id: 'builder-pack',
+  name: { ru: 'Набор строителя', en: 'Builder pack' },
+  author: 'ItsLamba',
+  version: '1.0',
+  api: 1,
+  description: {
+    ru: 'Два материала, четыре предмета и инструмент со своим звуком.',
+    en: 'Two materials, four items and a tool with its own sound.',
+  },
+
+  setup(w) {
+    // ---- материалы: копия готового (like) со своим цветом и числами; чего не задали — как у образца ----
+    w.addMaterial({
+      id: 'titan', name: { ru: 'Титан', en: 'Titanium' },
+      like: 'steel',                        // образец: текстура и поведение стали
+      color: '#9fb0c4',
+      density: 0.8,                         // легче стали (у неё 1,4)
+      hp: 600,                              // крепче к ударам (у стали 320)
+      shear: 900, tension: 3000,            // длинные балки и выступы
+    });
+    w.addMaterial({
+      id: 'jelly', name: { ru: 'Желе', en: 'Jelly' },
+      like: 'drywall', color: '#58d68d',
+      density: 0.3, hp: 8, brittle: 3,      // лёгкое и рассыпается от любого толчка
+    });
+
+    // ---- предметы: размеры в пикселях мира (клетка — 6), рисунок — функция в рамке 0…w × 0…h ----
+    w.addItem({
+      id: 'neon', name: { ru: 'Неоновая вывеска', en: 'Neon sign' },
+      width: 36, height: 10, mass: 1.5, hp: 20, sound: 'glass', fragile: 1.2,
+      hang: true,                           // цепляется к потолку над курсором
+      light: { x: 0, y: 0, radius: 46 },    // ночью светится
+      variants: 3,
+      draw(ctx, pw, ph, v) {
+        const col = ['#ff3d81', '#35e0ff', '#ffd23f'][v];
+        ctx.fillStyle = '#1b1d22'; ctx.fillRect(0, 0, pw, ph);
+        ctx.strokeStyle = col; ctx.lineWidth = 1.4;
+        ctx.strokeRect(2, 2, pw - 4, ph - 4);
+        ctx.beginPath();                    // зигзаг-«надпись»
+        for (let x = 5; x < pw - 5; x += 4) { ctx.moveTo(x, ph - 3.5); ctx.lineTo(x + 2, 3.5); ctx.lineTo(x + 4, ph - 3.5); }
+        ctx.stroke();
+      },
+    });
+    w.addItem({
+      id: 'paint', name: { ru: 'Бочка с краской', en: 'Paint barrel' },
+      width: 12, height: 16, mass: 4, hp: 40, sound: 'metal', flammable: 0.6, variants: 4,
+      draw(ctx, pw, ph, v) {
+        ctx.fillStyle = ['#d94f4f', '#4f8fd9', '#e0c040', '#5cb85c'][v]; ctx.fillRect(0, 1, pw, ph - 2);
+        ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fillRect(0, 4, pw, 1.2); ctx.fillRect(0, ph - 5, pw, 1.2);
+        ctx.fillStyle = '#2b2d31'; ctx.fillRect(0, 0, pw, 1.5); ctx.fillRect(0, ph - 1.5, pw, 1.5);
+        ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.fillRect(2, 2, 2, ph - 4);
+      },
+    });
+    w.addItem({
+      id: 'fireworks', name: { ru: 'Ящик фейерверков', en: 'Fireworks crate' },
+      width: 16, height: 10, mass: 2, hp: 18, sound: 'wood', flammable: 0.9,
+      explosive: { radius: 34, power: 160, fire: 0.8, fuse: 1.5 },   // рвётся от удара и от огня
+      draw(ctx, pw, ph) {
+        ctx.fillStyle = '#a8743f'; ctx.fillRect(0, 0, pw, ph);
+        ctx.fillStyle = '#5e3d26'; ctx.fillRect(0, 0, pw, 1); ctx.fillRect(0, ph - 1, pw, 1); ctx.fillRect(pw / 2 - 0.5, 0, 1, ph);
+        ctx.fillStyle = '#e03a2f'; ctx.beginPath(); ctx.moveTo(4, 7); ctx.lineTo(5.5, 3); ctx.lineTo(7, 7); ctx.fill();
+        ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.moveTo(10, 7); ctx.lineTo(11.5, 3); ctx.lineTo(13, 7); ctx.fill();
+      },
+    });
+
+    // Предмет с готовой картинкой вместо draw: image — вшитый файл png, jpeg, webp или gif (строка ARCADE внизу).
+    // Маленькая картинка, где точка — пиксель мира (как здесь, 16 × 26), рисуется без сглаживания, пиксель в пиксель.
+    // Несколько видов одного предмета — images: [картинка, картинка, …].
+    w.addItem({
+      id: 'arcade', name: { ru: 'Игровой автомат', en: 'Arcade cabinet' },
+      width: 16, height: 26, mass: 8, hp: 60, sound: 'metal', fragile: 0.8,
+      light: { x: 0, y: -4, radius: 34 },   // экран светится ночью
+      image: ARCADE,
+    });
+
+    // ---- свой звук: запись, вшитая в файл (здесь — короткий писк, собранный прямо в моде) ----
+    w.addSound('beep', beepWav());
+
+    // ---- инструмент: сыплет с неба свои предметы ----
+    w.addTool({
+      id: 'crates', name: { ru: 'Дождь из ящиков', en: 'Crate rain' },
+      hint: { ru: 'Коснитесь — с неба посыплются ящики фейерверков и бочки с краской.', en: 'Tap — fireworks crates and paint barrels fall from the sky.' },
+      slider: { label: { ru: 'Сколько', en: 'How many' }, min: 3, max: 20, def: 8 },
+      down(p) {
+        w.sound('beep', p.x, p.y, 0.6);               // свой звук — по короткому имени
+        for (let i = 0; i < p.value; i++) {
+          w.after(i * 0.12, () => {
+            const x = p.x + (Math.random() - 0.5) * 220;
+            w.spawnItem(Math.random() < 0.5 ? 'fireworks' : 'paint', x, w.camera.top - 20, { vy: 200, angle: Math.random() * 3 });
+          });
+        }
+      },
+    });
+  },
+});
+
+// Картинка игрового автомата — файл PNG 16 × 26 точек, записанный строкой (так в мод вшивают любые картинки)
+const ARCADE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAaCAYAAAC+aNwHAAAAqklEQVR42mNggAJpWaX/pGAGZAAS+H/JniSMYgjcANtGCIYpxMPHbgAlLiAHoxig6z/vP4+IAlEYpBavAbF/qjA0IYsRNABdA7qBRLkAGybKAGTFuNhEGYDPFQQNwGYQshztA5GsdEB2SoTZTg4GGwIz4MWLJ3AJUI5DVwzKQDA2TC3cAHmrCrIwRd7AGgvIOLuoAQWTZQAstMk2gCIXUBwGJBtAdhRSmpQBjgi/cpqsdMsAAAAASUVORK5CYII=';
+
+// Короткий писк в формате WAV (0,12 с). В настоящем моде сюда вставляют готовую запись: 'data:audio/mpeg;base64,…'
+function beepWav() {
+  const n = 960, b = new Uint8Array(44 + n), dv = new DataView(b.buffer);
+  const put = (o, s) => { for (let i = 0; i < s.length; i++) b[o + i] = s.charCodeAt(i); };
+  put(0, 'RIFF'); dv.setUint32(4, 36 + n, true); put(8, 'WAVEfmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 1, true);
+  dv.setUint32(24, 8000, true); dv.setUint32(28, 8000, true); dv.setUint16(32, 1, true); dv.setUint16(34, 8, true); put(36, 'data'); dv.setUint32(40, n, true);
+  for (let i = 0; i < n; i++) b[44 + i] = 128 + Math.round(70 * Math.sin(i * 0.9) * (1 - i / n));
+  let s = '';
+  for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+  return 'data:audio/wav;base64,' + btoa(s);
+}

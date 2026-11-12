@@ -1,0 +1,80 @@
+// Динамит — мод-пример для Wreckbox: события, правила игры и своё хранилище.
+// Как поставить: меню → «Моды» → «Добавить файл» (или «Вставить текст» и вставить всё это целиком).
+// Что делает:
+//  • материал «Динамит» в «Кисти» («Стройка»): разрушенный блок взрывается — стена из него рвётся цепочкой;
+//  • счёт на экране: сколько взрывов было и рекорд самой длинной цепочки (рекорд хранится между запусками игры);
+//  • инструмент «Гравитация» в «Сносе»: ползунок меняет силу тяжести от невесомости до двойной;
+//  • команда консоли «рекорд» — показать и сбросить рекорд.
+Wreck.mod({
+  id: 'dynamite',
+  name: { ru: 'Динамит', en: 'Dynamite' },
+  author: 'ItsLamba',
+  version: '1.0',
+  api: 1,
+  description: {
+    ru: 'Блоки динамита взрываются цепочкой. Счёт взрывов, рекорд цепочки, ползунок гравитации.',
+    en: 'Dynamite blocks blow up in a chain. Explosion counter, best chain, gravity slider.',
+  },
+
+  setup(w) {
+    const ru = w.lang === 'ru';
+    let booms = 0;                           // взрывов в этом мире
+    let chain = 0, chainAt = -9;             // идущая цепочка и время её последнего взрыва (секунды игры)
+    let best = w.store.get('best', 0);       // рекорд — из хранилища мода: переживает перезапуск игры
+
+    // Материал: как дерево, но красный. onBreak зовётся, когда блок разрушен (e.x, e.y — где он был).
+    // Взрыв ломает соседние блоки динамита — их onBreak сработает на следующем шаге игры: цепочка идёт сама.
+    w.addMaterial({
+      id: 'tnt', name: { ru: 'Динамит', en: 'Dynamite' }, like: 'wood', color: '#c0392b', hp: 30,
+      onBreak(e) { w.explode(e.x, e.y, 34, 380, { fire: 0.2 }); },
+    });
+
+    // Событие «взрыв» приходит до взрыва: тут его можно усилить (e.power *= 2) или отменить (return false).
+    // Мы только считаем: взрывы, идущие не реже раза в полсекунды, — одна цепочка.
+    w.on('explode', () => {
+      const t = w.world.time;
+      chain = t - chainAt < 0.5 ? chain + 1 : 1;
+      chainAt = t;
+      booms++;
+      if (chain > best) { best = chain; w.store.set('best', best); }
+    });
+
+    // Новый мир (перезапуск, другая карта, загрузка сохранения): счёт начинается заново.
+    // e.loaded — мир из сохранения, тогда e.data — то, что мы положили туда в «save».
+    w.on('world', (e) => { booms = e.loaded && e.data ? e.data.booms || 0 : 0; chain = 0; chainAt = -9; });
+    w.on('save', () => ({ booms }));
+
+    // Надпись поверх кадра: холст в пикселях экрана, width и height — его размеры,
+    // free — часть экрана, свободная от панелей игры ({ top, bottom, left, right }): ставим счёт сразу под верхними панелями.
+    w.on('hud', (ctx, width, height, free) => {
+      if (!booms) return;
+      const text = (ru ? 'Взрывов: ' : 'Explosions: ') + booms + (ru ? ' · рекорд цепочки: ' : ' · best chain: ') + best;
+      ctx.font = '600 14px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      const tw = ctx.measureText(text).width + 24, y = free.top;
+      ctx.fillStyle = 'rgba(20, 22, 28, 0.72)';
+      ctx.fillRect(width / 2 - tw / 2, y, tw, 26);
+      ctx.fillStyle = '#ffd23f';
+      ctx.fillText(text, width / 2, y + 18);
+    });
+
+    // Правила игры: w.set(имя, множитель). 1 — как в игре; выключили мод — правило вернулось.
+    // Другие правила: explosionPower, explosionRadius, blockDamage, itemDamage, peopleDamage, fallDamage,
+    // fireSpread, buildingStrength, timeScale.
+    w.addTool({
+      id: 'gravity',
+      name: { ru: 'Гравитация', en: 'Gravity' },
+      hint: { ru: 'Выставьте ползунок и коснитесь мира.', en: 'Set the slider and tap the world.' },
+      slider: { label: { ru: 'Сила тяжести', en: 'Gravity' }, min: 0, max: 20, def: 10, format: (v) => v * 10 + '%' },
+      down(p) {
+        w.set('gravity', p.value / 10);
+        w.toast((ru ? 'Гравитация: ' : 'Gravity: ') + p.value * 10 + '%');
+      },
+    });
+
+    w.addCommand('рекорд', (arg) => {
+      if (arg === 'сброс' || arg === 'reset') { best = 0; w.store.remove('best'); return ru ? 'Рекорд сброшен' : 'Best chain reset'; }
+      return (ru ? 'Рекорд цепочки: ' : 'Best chain: ') + best;
+    });
+  },
+});

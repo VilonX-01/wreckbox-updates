@@ -1,0 +1,60 @@
+// Кассетная бомба — мод-пример для Wreckbox.
+// Как поставить: меню → «Моды» → «Добавить файл» (или «Вставить текст» и вставить всё это целиком).
+// Что делает: добавляет в «Снос» инструмент «Кассетная бомба» и команду консоли «салют».
+Wreck.mod({
+  id: 'cluster-bomb',                     // латиницей, без пробелов: по нему игра отличает моды друг от друга
+  name: { ru: 'Кассетная бомба', en: 'Cluster bomb' },
+  author: 'ItsLamba',
+  version: '1.0',
+  api: 1,                                 // версия формата модов
+  description: {
+    ru: 'Бомба раскрывается в воздухе и засыпает улицу мелкими зарядами.',
+    en: 'The bomb opens in the air and showers the street with bomblets.',
+  },
+
+  setup(w) {
+    w.addTool({
+      id: 'cluster',
+      name: { ru: 'Кассетная бомба', en: 'Cluster bomb' },
+      hint: { ru: 'Коснитесь цели — бомба раскроется над ней.', en: 'Tap a target — the bomb opens above it.' },
+      slider: { label: { ru: 'Зарядов', en: 'Bomblets' }, min: 4, max: 24, def: 12 },
+
+      // касание: p.x, p.y — точка в мире (пиксели), p.value — значение ползунка
+      down(p) {
+        const n = p.value;
+        const top = Math.min(w.camera.top - 60, p.y - 500);          // бомба появляется выше кадра
+        w.shoot({
+          x: p.x, y: top, vx: 0, vy: 420, look: 'bomb', size: 1.4,
+          fuse: Math.max(0.3, (p.y - 160 - top) / 520),              // раскрыться метрах в десяти над целью
+          onHit(h) {                                                 // вместо обычного взрыва — своё
+            w.explode(h.x, h.y, 16, 80, { fire: 0 });
+            for (let i = 0; i < n; i++) {
+              w.shoot({
+                x: h.x, y: h.y, look: 'ball', spin: 9, trail: 'smoke',
+                vx: (i - (n - 1) / 2) * 34 + (Math.random() - 0.5) * 30,
+                vy: 120 + Math.random() * 120,
+                radius: 26, power: 260,
+              });
+            }
+          },
+        });
+      },
+
+      // прицел под курсором; холст уже в координатах мира
+      draw(ctx, p) {
+        ctx.strokeStyle = 'rgba(255, 90, 60, 0.9)';
+        ctx.lineWidth = 2 / w.camera.zoom;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, 6.3); ctx.stroke();
+      },
+    });
+
+    // консоль (клавиша ~): «салют»
+    w.addCommand('салют', () => {
+      const c = w.camera;
+      for (let i = 0; i < 8; i++) {
+        w.after(i * 0.25, () => w.explode(c.left + Math.random() * (c.right - c.left), c.top + 80 + Math.random() * 120, 30, 60, { fire: 0 }));
+      }
+      return w.lang === 'ru' ? 'Салют!' : 'Fireworks!';
+    });
+  },
+});
