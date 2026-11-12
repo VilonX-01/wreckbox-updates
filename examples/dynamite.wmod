@@ -15,6 +15,19 @@ Wreck.mod({
     ru: 'Блоки динамита взрываются цепочкой. Счёт взрывов, рекорд цепочки, ползунок гравитации.',
     en: 'Dynamite blocks blow up in a chain. Explosion counter, best chain, gravity slider.',
   },
+  // подробное описание — кнопка «Подробнее» в меню «Моды»; переносы строк сохраняются
+  details: {
+    ru: 'Динамит — в «Кисти» («Стройка»), красные блоки в конце списка. Постройте из него стену или заложите в дом и ударьте '
+      + 'любым инструментом: разрушенный блок взрывается и ломает соседние — цепочка идёт сама.\n\n'
+      + 'Счёт вверху экрана: сколько блоков взорвалось и самая длинная цепочка. Рекорд хранится между запусками игры.\n\n'
+      + '«Гравитация» в «Сносе»: ползунок от невесомости до двойной силы тяжести. Выключили мод — гравитация обычная.\n\n'
+      + 'Консоль (клавиша ~): «рекорд» — показать рекорд, «рекорд сброс» — сбросить.',
+    en: 'Dynamite is in the Brush (Build), red blocks at the end of the list. Build a wall of it or plant it in a house and hit it '
+      + 'with any tool: a destroyed block explodes and breaks its neighbours — the chain runs by itself.\n\n'
+      + 'The counter at the top of the screen: how many blocks blew up and the longest chain. The record is kept between game launches.\n\n'
+      + '“Gravity” in Demolish: a slider from weightlessness to double gravity. Turn the mod off and gravity is normal again.\n\n'
+      + 'Console (the ~ key): “рекорд” — show the record, “рекорд сброс” — reset it.',
+  },
 
   setup(w) {
     const ru = w.lang === 'ru';

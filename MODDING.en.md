@@ -135,7 +135,8 @@ The whole mod is one call, `Wreck.mod({ … })`. Inside the braces is the descri
 | `author` | Author | No |
 | `version` | Mod version: `'1.0'`, `'1.2.3'` | No |
 | `api` | Mod format version. Always `1` for now | Yes |
-| `description` | Description for the “Mods” menu, up to 220 characters | No |
+| `description` | Short description in the mod’s row in the “Mods” menu, up to 220 characters (longer — cut with “…”, the full text opens with the “Learn more” button) | No |
+| `details` | Detailed description up to 4000 characters: subtleties, rules, commands, tips. Line breaks are kept. A string or in two languages. If present, the mod gets a “Learn more” button | No |
 | `setup(w)` | The function the game calls when the mod is turned on. `w` is the control panel | Yes |
 
 Outside `setup` you can declare your own constants and functions (like `const DATA = '…'` in a mod from the editor). Everything
