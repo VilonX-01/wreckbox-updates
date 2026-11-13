@@ -216,6 +216,9 @@ moves and draws them itself); console commands; data in the save.
 A mod **can’t**: change how citizens behave, drive a vehicle, add new liquids or new interface windows, replace the physics
 as a whole, go online.
 
+The control panel has no game particles — debris, sparks, dust, smoke: a mod moves its own fragments and sparks in `update` and
+draws them in `draw` (how to keep them from hanging in the air — section 7.4, “Your own objects hang in the air”).
+
 ---
 
 ## 4. Reference: every command of the control panel
@@ -1278,6 +1281,34 @@ If errors come often (5 in 20 seconds), the mod turns itself off — turn it on 
 - The item didn’t appear in “Items” — it is in the “Mods” tab.
 - Your own recording is silent in the first moment after the mod is turned on — it is still being prepared.
 - The `world` event didn’t come — the mod was turned on in a running game; it will come with the next world.
+- **Your own objects hang in the air** (fragments, shell casings, marks on walls). The game moves only its own things: a dot the mod
+  drew on a wall won’t fall when the wall is destroyed. Remember which block the object lies on or is stuck in, and check it every
+  step with `w.blockAt`; if the block is gone, the object falls until it lands on another one. And don’t forget to remove old objects.
+
+```js
+// your own fragments: they fly, land on a block, fall on when the block is destroyed, vanish after 8 s
+const bits = [];                                    // { x, y, vx, vy, t, lie, sx, sy }
+for (let k = 0; k < 20; k++) bits.push({ x, y: y - 60, vx: (Math.random() - 0.5) * 300, vy: -250 * Math.random(), t: 0, lie: false });
+w.on('update', (dt) => {
+  const g = 450 * w.world.gravity;
+  for (let i = bits.length - 1; i >= 0; i--) {
+    const b = bits[i];
+    if ((b.t += dt) > 8) { bits.splice(i, 1); continue; }
+    if (b.lie) {
+      if (w.blockAt(b.sx, b.sy)) continue;          // the support is intact — it lies
+      b.lie = false; b.vx = 0; b.vy = 0;            // no support — it falls
+    }
+    b.vy += g * dt;
+    const nx = b.x + b.vx * dt, ny = b.y + b.vy * dt;
+    if (w.blockAt(nx, ny)) { b.lie = true; b.sx = nx; b.sy = ny; continue; }   // landed on a block — remember the support
+    b.x = nx; b.y = ny;
+  }
+});
+w.on('draw', (ctx) => {
+  ctx.fillStyle = '#5a5048';
+  for (const b of bits) ctx.fillRect(b.x - 1.5, b.y - 1.5, 3, 3);
+});
+```
 
 ---
 
@@ -1306,6 +1337,8 @@ If you are a neural network and you are asked to make a mod for Wreckbox, follow
 4. **`id` in Latin letters**, unique for the mod and for each kind inside it. Everything the player sees — in two languages `{ ru, en }`.
 5. **Mind the limits** (section 5): the action budget per step, the sizes. Don’t do in `update` what is heavy to do 60 times a second
    (searching for people across the whole world every step, hundreds of blasts). Spread it over time.
+   Your own particles (fragments, sparks) — no more than a few hundred, each with a lifetime; anything lying on a block or stuck
+   in one checks its support with `w.blockAt` every step and falls if the block is destroyed (7.4).
 6. **What the game can’t do** (section 3.7) — say so honestly and offer the closest thing the control panel can do.
 7. Comments in the code — in the language of the person asking. After the code, explain in two or three sentences how to install the mod
    and where to find what it added.
