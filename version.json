@@ -1,19 +1,19 @@
 {
-  "version": "1.9.3",
-  "date": "2026-10-27",
+  "version": "2.0",
+  "date": "2026-11-13",
   "url": "https://itslamba.itch.io/wreckbox",
   "notes": [
-    "Оригинальная игра — Wreckbox от ItsLamba, только на itch.io: копии с другим названием выложены без разрешения автора",
-    "На телефоне звук больше не трещит, не заикается и не пропадает",
-    "Windows: сохранения и настройки больше не пропадают после перезапуска игры",
-    "Обвалы и метеориты не хрипят в динамике телефона",
-    "Если звук всё же пропал — коснитесь экрана, он вернётся"
+    "Моды: ставьте дополнения файлом и делайте свои — даже без кода, из постройки или карты",
+    "Редактор карт: рельеф, здания, вода, свои дома для жителей, «Мои карты»",
+    "Бандиты: ограбления магазинов и банка, заложники, полиция и спецназ",
+    "Дроны: FPV и бомбер — сами находят цель или летают под вашим управлением",
+    "«Стройка»: все предметы игры в каталоге, столбы с проводами, комнаты с окнами, «Копировать»"
   ],
   "notes_en": [
-    "The original game is Wreckbox by ItsLamba, only on itch.io: copies under other names are uploaded without the author's permission",
-    "On phones, sound no longer crackles, stutters or disappears",
-    "Windows: saves and settings no longer disappear after restarting the game",
-    "Collapses and meteors no longer distort on phone speakers",
-    "If the sound ever drops out, tap the screen and it comes back"
+    "Mods: install add-ons from a file and make your own — even without code, from a building or a map",
+    "Map editor: terrain, buildings, water, your own houses for residents, “My maps”",
+    "Bandits: shop and bank robberies, hostages, police and SWAT",
+    "Drones: FPV and bomber — they find the target themselves or fly under your control",
+    "Build mode: every item in the game in one catalog, power poles, rooms with windows, “Copy”"
   ]
 }
